@@ -1,0 +1,20 @@
+CREATE DATABASE my_db CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE `test`.`posts` (
+`userId` INT NOT NULL ,
+`id` INT NOT NULL ,
+`title` VARCHAR(255) NOT NULL ,
+`body` VARCHAR(255) NOT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `test`.`comments` (
+ `postId` INT NOT NULL ,
+ `id` INT NOT NULL ,
+ `name` VARCHAR(255) NOT NULL ,
+ `email` VARCHAR(255) NOT NULL ,
+ `body` TEXT NOT NULL ,
+ PRIMARY KEY (`id`)
+ )
+ ENGINE = InnoDB;
