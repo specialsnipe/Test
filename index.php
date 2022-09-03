@@ -40,36 +40,40 @@ session_start();
 </form>
 
 <?php
-if(isset($_REQUEST['search'])) {
+$_SESSION['search'] = $_REQUEST['search'];
+if (isset($_REQUEST['search'])) {
 
-$inputSearch = $_REQUEST['search'];
-if (strlen($_REQUEST['search']) >= 3) {
-    $sql = "SELECT p.userId, p.id,p.title,p.body FROM `posts` AS p INNER JOIN `comments` ON p.id = comments.postId WHERE comments.body LIKE '%" . $inputSearch . "%' Group By p.id";
-    $db = new DB();
-    $result = mysqli_query($db->connect, $sql);
-    $result = mysqli_fetch_all($result);
-}
+    $inputSearch = $_REQUEST['search'];
+    if (strlen($_REQUEST['search']) >= 3) {
+        $sql = "SELECT p.id, p.title,c.id, c.body FROM `posts` AS p INNER JOIN `comments` AS c ON p.id = c.postId WHERE c.body LIKE '%" . $inputSearch . "%'";
+        $db = new DB();
+        $result = mysqli_query($db->connect, $sql);
+        $result = mysqli_fetch_all($result);
+    }
 }
 ?>
 
 <table>
     <tr>
-        <th>userId</th>
-        <th>id</th>
-        <th>title</th>
-        <th>body</th>
+        <th>ID записи</th>
+        <th>Заголовок записи</th>
+        <th>ID комментария</th>
+        <th>Комментарий</th>
     </tr>
     <?php if (isset($result)) {
-    foreach ($result as $row) {
-    echo "
+        foreach ($result as $row) {
+            $newRow = str_replace($inputSearch, "<b>{$inputSearch}</b>", $row[3]);
+
+            echo "
             <tr>
                 <td>{$row[0]} </td>
                 <td>{$row[1]}</td>
                 <td>{$row[2]}</td>
-                <td>{$row[3]}</td>
+                <td>{$newRow}</td>
+                
             </tr>
            ";
-    }
+        }
     } ?>
 </table>
 </body>

@@ -10,7 +10,7 @@ class DB
     {
         $dbOptions = (require __DIR__ . '/../config/settings.php')['db'];
 
-            $this->connect = mysqli_connect( $dbOptions['host'], $dbOptions['user'], $dbOptions['password'], $dbOptions['dbname']);
+        $this->connect = mysqli_connect($dbOptions['host'], $dbOptions['user'], $dbOptions['password'], $dbOptions['dbname']);
 
     }
 
